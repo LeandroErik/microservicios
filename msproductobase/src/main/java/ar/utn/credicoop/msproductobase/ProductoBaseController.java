@@ -6,10 +6,13 @@ import ar.utn.credicoop.msproductobase.repositorios.RepoPosiblePersonalizacion;
 import ar.utn.credicoop.msproductobase.repositorios.RepoProductoBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +25,20 @@ public class ProductoBaseController{
     private RepoProductoBase repoProducto;
     @Autowired
     private RepoPosiblePersonalizacion repoPosible;
+
+    @GetMapping("/productos/{productoBaseId}")
+    public  @ResponseBody ResponseEntity<Object> existeProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
+        Optional<ProductoBase> productoBase = repoProducto.findById(productoBaseId);
+        if(productoBase.isPresent()){
+            return ResponseEntity.ok(productoBase.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/productos/")
+    public List<ProductoBase> obtenerProductosBase(){
+        return repoProducto.findAll();
+    }
 
 
     @PostMapping("/productos/")
@@ -41,11 +58,6 @@ public class ProductoBaseController{
 
     }
 
-    @GetMapping("/productos/{productoBaseId}")
-    public  RtaProductoBaseDTO existeProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
-
-        return new RtaProductoBaseDTO("Gorra :"+puerto, 11.22);
-    }
     @Transactional
     @PostMapping("/posiblepersonalizacion/")
     public void crearPosiblePersonalizacion(@RequestBody PosiblePersonalizacion pos){
