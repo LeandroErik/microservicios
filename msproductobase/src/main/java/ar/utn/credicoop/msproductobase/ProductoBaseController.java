@@ -50,11 +50,17 @@ public class ProductoBaseController{
     @Transactional
     @PostMapping("/productos/{productoBaseId}/posiblepersonalizacion")
     @ResponseStatus(HttpStatus.OK)
-    public void agregarPosiblepersonalizacion(@PathVariable("productoBaseId") Integer productoBaseId, @RequestBody PosiblePersonalizacion posiblePersonalizacion){
+    public @ResponseBody ResponseEntity<Object> agregarPosiblepersonalizacion(@PathVariable("productoBaseId") Integer productoBaseId, @RequestBody PosiblePersonalizacion posiblePersonalizacion){
         Optional<ProductoBase> productoOpcional =repoProducto.findById(productoBaseId);
-        //Corroborar que el optional de ok
-        ProductoBase producto = productoOpcional.get();
-        producto.agregarPersonalizacion(posiblePersonalizacion);
+        if(productoOpcional.isPresent()){
+            ProductoBase producto = productoOpcional.get();
+            producto.agregarPersonalizacion(posiblePersonalizacion);
+            return ResponseEntity.ok(producto);
+        }else{
+
+            return ResponseEntity.notFound().build();
+        }
+
 
     }
 
