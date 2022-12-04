@@ -16,7 +16,7 @@ public class Personalizacion extends Persistente {
     private String nombre;
 
     @Column(name = "precio")
-    private Float precio;
+    private Double precioPersonalizacion;
 
     @Column(name = "contenido")
     private String contenido;

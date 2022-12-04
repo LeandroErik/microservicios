@@ -26,19 +26,26 @@ public class ProductoPersonalizadoController {
     public @ResponseBody ResponseEntity<Object> crearProductoPersonalizado(@RequestBody ProductoPersonalizado productoPersonalizado) {
         //Comprobar existencia de producto base
         if(proxy.existeProductoBase(productoPersonalizado.getProductoId())){
-            //Comprobar que admita la personbalizacion
-            boolean esPosiblePersonalizacion= false;
+
+            boolean aceptaPosiblePersonalizacion= false;
             List<PosiblePersonalizacion> posibles = proxy.traerTodas(productoPersonalizado.getProductoId());
             PosiblePersonalizacion comparar = productoPersonalizado.getPersonalizacion().getPosiblePersonalizacion();
             for(PosiblePersonalizacion actual:posibles){
                 if(actual.getArea().getNombreArea().equals(comparar.getArea().getNombreArea())&&actual.getTipo().getNombreTipo().equals(comparar.getTipo().getNombreTipo())){
-                    esPosiblePersonalizacion= true;
+                    aceptaPosiblePersonalizacion= true;
                 }
             }
-            if(esPosiblePersonalizacion){
+
+            if(aceptaPosiblePersonalizacion){
                 //Hacer el post de producto personalizado
+                Double precioPersonalizacion = productoPersonalizado.getPersonalizacion().getPrecioPersonalizacion();
+                Double precioProductoBase = proxy.consultarProductoBase(productoPersonalizado.getProductoId()).getPrecioBase();
+
+                productoPersonalizado.setPrecioFinal(precioProductoBase+precioPersonalizacion);
+
                 repoProductoPersonalizado.save(productoPersonalizado);
-                return ResponseEntity.ok().build();
+
+                return ResponseEntity.ok(productoPersonalizado);
             }else{
                 return ResponseEntity.notFound().build();
             }
@@ -65,9 +72,9 @@ public class ProductoPersonalizadoController {
         Optional<ProductoPersonalizado> productoPersonalizadoOptional= repoProductoPersonalizado.findById(productoPersonalizadoId);
         //TODO:Verficacion de exitencia de id.
         ProductoPersonalizado productoPersonalizado = productoPersonalizadoOptional.get();
-        RtaProductoBaseDTO productoBase = proxy.consultarProductoBase(productoPersonalizado.getProductoId());
+        RtaProductoBaseDTO productoBaseDTO = proxy.consultarProductoBase(productoPersonalizado.getProductoId());
 
-        return new RtaProductoPersonalizadoDTO(productoBase,productoPersonalizado.getPrecioFinal());
+        return new RtaProductoPersonalizadoDTO(productoBaseDTO.getProductoBaseId(),productoBaseDTO.getNombre(),productoPersonalizado.getPrecioFinal());
     }
 
 }
