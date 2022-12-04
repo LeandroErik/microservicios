@@ -27,17 +27,44 @@ public class ProductoBaseController{
     private RepoPosiblePersonalizacion repoPosible;
 
     @GetMapping("/productos/{productoBaseId}")
-    public  @ResponseBody ResponseEntity<Object> existeProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
+    public  Boolean existeProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
         Optional<ProductoBase> productoBase = repoProducto.findById(productoBaseId);
         if(productoBase.isPresent()){
-            return ResponseEntity.ok(productoBase.get());
+            return true;
         }else{
-            return ResponseEntity.notFound().build();
+            return false;
         }
     }
+    @GetMapping("/productos/{productoBaseId}/posiblesPersonalizaciones")
+    public List<PosiblePersonalizacion> traerTodas(@PathVariable("productoBaseId") Integer productoBaseId){
+        return repoProducto.findById(productoBaseId).get().getPersonalizacionesPermitidas();
+    }
+
+    //@GetMapping("/productos/{productoBaseId}/admitePersonalizacion/")
+    @RequestMapping(value = "/productos/{productoBaseId}/admitePersonalizacion/", method = RequestMethod.GET)
+    public Boolean admitePosiblePersonalizacion(@PathVariable("productoBaseId") Integer productoBaseId, @RequestBody PosiblePersonalizacion posiblePersonalizacion){
+          Optional<ProductoBase> productoBaseOpcional = repoProducto.findById(productoBaseId);
+          ProductoBase productoBase = productoBaseOpcional.get();
+          Boolean esPosiblePersonalizacion = false;
+
+          for(PosiblePersonalizacion actual:productoBase.getPersonalizacionesPermitidas()){
+              if(actual.getArea().getNombreArea().equals(posiblePersonalizacion.getArea().getNombreArea())&&actual.getTipo().getNombreTipo().equals(posiblePersonalizacion.getTipo().getNombreTipo())){
+                  esPosiblePersonalizacion=true;
+              }
+          }
+        return esPosiblePersonalizacion;
+    }
+
     @GetMapping("/productos/")
     public List<ProductoBase> obtenerProductosBase(){
         return repoProducto.findAll();
+    }
+
+    @GetMapping("/productos/{productoBaseId}/datos")
+    public RtaProductoBaseDTO consultarProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
+        ProductoBase productoBase = repoProducto.findById(productoBaseId).get();
+
+        return new RtaProductoBaseDTO(productoBase.getId(),productoBase.getNombre(), productoBase.getPrecioBase());
     }
 
 
@@ -60,8 +87,6 @@ public class ProductoBaseController{
 
             return ResponseEntity.notFound().build();
         }
-
-
     }
 
     @Transactional
