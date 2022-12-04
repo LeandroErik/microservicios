@@ -15,10 +15,10 @@ public interface ProductoBaseProxy {
     Boolean existeProductoBase(@PathVariable("productoBaseId") Integer productoBaseId);
 
     @GetMapping("/productos/{productoBaseId}/posiblesPersonalizaciones")
-    public List<PosiblePersonalizacion> traerTodas(@PathVariable("productoBaseId") Integer productoBaseId);
+    List<PosiblePersonalizacion> traerTodas(@PathVariable("productoBaseId") Integer productoBaseId);
 
     @GetMapping("/productos/{productoBaseId}/datos")
-    public RtaProductoBaseDTO consultarProductoBase(@PathVariable("productoBaseId") Integer productoBaseId);
+    RtaProductoBaseDTO consultarProductoBase(@PathVariable("productoBaseId") Integer productoBaseId);
 
 
     //@GetMapping("/productos/{productoBaseId}/admitePersonalizacion/") Este Get lo toma como POST(Puede ser que el GET no soporte @requestBody)

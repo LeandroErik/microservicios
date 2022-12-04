@@ -49,6 +49,7 @@ public class ProductoPersonalizadoController {
 
 
     @GetMapping("/productosPersonalizados/{productoPersonalizadoId}")
+    @ResponseStatus(HttpStatus.OK)
     Boolean existeProductoPersonalizado(@PathVariable("productoPersonalizadoId") Integer productoPersonalizadoId) {
         Optional<ProductoPersonalizado> productoPersonalizado = repoProductoPersonalizado.findById(productoPersonalizadoId);
         if(productoPersonalizado.isPresent()){
@@ -58,5 +59,15 @@ public class ProductoPersonalizadoController {
         }
     }
 
+    @GetMapping("/productosPersonalizados/{productoPersonalizadoId}/datos")
+    @ResponseStatus(HttpStatus.OK)
+    RtaProductoPersonalizadoDTO consultarProductoPersonalizado(@PathVariable("productoPersonalizadoId") Integer productoPersonalizadoId){
+        Optional<ProductoPersonalizado> productoPersonalizadoOptional= repoProductoPersonalizado.findById(productoPersonalizadoId);
+        //TODO:Verficacion de exitencia de id.
+        ProductoPersonalizado productoPersonalizado = productoPersonalizadoOptional.get();
+        RtaProductoBaseDTO productoBase = proxy.consultarProductoBase(productoPersonalizado.getProductoId());
+
+        return new RtaProductoPersonalizadoDTO(productoBase,productoPersonalizado.getPrecioFinal());
+    }
 
 }

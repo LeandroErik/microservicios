@@ -8,7 +8,7 @@ import lombok.Setter;
 public class RtaProductoBaseDTO {
     private Integer productoBaseId;
     private String nombre;
-    private Double precio;
+    private Double precioBase;
 
     public RtaProductoBaseDTO() {
     }
@@ -16,6 +16,6 @@ public class RtaProductoBaseDTO {
     public RtaProductoBaseDTO(Integer productoBaseId, String nombre, Double precio) {
         this.productoBaseId = productoBaseId;
         this.nombre = nombre;
-        this.precio = precio;
+        this.precioBase = precio;
     }
 }

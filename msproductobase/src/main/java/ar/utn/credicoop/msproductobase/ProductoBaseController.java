@@ -62,6 +62,7 @@ public class ProductoBaseController{
 
     @GetMapping("/productos/{productoBaseId}/datos")
     public RtaProductoBaseDTO consultarProductoBase(@PathVariable("productoBaseId") Integer productoBaseId){
+        //TODO:Verficicar que exista ese producto base
         ProductoBase productoBase = repoProducto.findById(productoBaseId).get();
 
         return new RtaProductoBaseDTO(productoBase.getId(),productoBase.getNombre(), productoBase.getPrecioBase());
