@@ -134,9 +134,9 @@ public class VentasController {
 
         for(Item actual:items){
             RtaProductoPersonalizadoDTO respuesta = proxy.consultarProductoPersonalizado(actual.getPublicacion().getProductoPersonalizadoId());
-            precioTotalCarrito+=respuesta.getPrecioFinal();
+            precioTotalCarrito+=respuesta.getPrecioFinal() * actual.getCantidad();
         }
-        CarritoDeCompraDTO carritoDTO = new CarritoDeCompraDTO(carritoDeCompraId,precioTotalCarrito);
+
         return ResponseEntity.ok("precio total de carrito "+carritoDeCompraId+": "+precioTotalCarrito);
     }
 

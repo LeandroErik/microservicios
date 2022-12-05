@@ -76,8 +76,9 @@ public class ProductoBaseController{
 
     @PostMapping("/productos/")
     @ResponseStatus(HttpStatus.OK)
-    public void crearProductoBase(@RequestBody ProductoBase productoBase){
+    public @ResponseBody ResponseEntity<Object> crearProductoBase(@RequestBody ProductoBase productoBase){
         repoProducto.save(productoBase);
+        return ResponseEntity.ok("ProductoBaseId: "+productoBase.getId()+"(puerto: "+puerto+" )");
     }
 
     @Transactional
