@@ -3,10 +3,15 @@ package ar.utn.credicoop.msproductopersonalizado;
 import ar.utn.credicoop.msproductopersonalizado.modelos.ProductoPersonalizado;
 import ar.utn.credicoop.msproductopersonalizado.modelos.personalizacion.PosiblePersonalizacion;
 import ar.utn.credicoop.msproductopersonalizado.repositorios.RepoProductoPersonalizado;
+import feign.FeignException;
+import io.github.resilience4j.retry.annotation.Retry;
 import jdk.nashorn.internal.runtime.options.Option;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +26,15 @@ public class ProductoPersonalizadoController {
     @Autowired
     private RepoProductoPersonalizado repoProductoPersonalizado;
 
+    private Logger log = LoggerFactory.getLogger(ProductoPersonalizadoController.class);
+
+    @Transactional
+    @Retry(name = "default",fallbackMethod = "noDisponible")
     @RequestMapping(value = "/productosPersonalizados/", method = RequestMethod.POST,headers = "Accept=application/json")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<Object> crearProductoPersonalizado(@RequestBody ProductoPersonalizado productoPersonalizado) {
         //Comprobar existencia de producto base
+        log.info("Se llamo al servidor ");
         if(proxy.existeProductoBase(productoPersonalizado.getProductoId())){
 
             boolean aceptaPosiblePersonalizacion= false;
@@ -47,11 +57,18 @@ public class ProductoPersonalizadoController {
 
                 return ResponseEntity.ok(productoPersonalizado);
             }else{
-                return ResponseEntity.notFound().build();
+                return new ResponseEntity<Object>("No acepta posible personalizacion", null, HttpStatus.NOT_FOUND);
             }
         }else{
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<Object>("No se encontro productoBase", null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    public @ResponseBody ResponseEntity<Object> noDisponible(IllegalStateException ex){
+        return new ResponseEntity<Object>("No se encontro Endpoint", null, HttpStatus.NOT_FOUND);
+    }
+    public @ResponseBody ResponseEntity<Object> noDisponible(FeignException ex){
+        return new ResponseEntity<Object>("No se encontro Endpoint", null, HttpStatus.NOT_FOUND);
     }
 
 

@@ -4,6 +4,10 @@ import ar.utn.credicoop.msproductobase.modelos.ProductoBase;
 import ar.utn.credicoop.msproductobase.modelos.personalizacion.PosiblePersonalizacion;
 import ar.utn.credicoop.msproductobase.repositorios.RepoPosiblePersonalizacion;
 import ar.utn.credicoop.msproductobase.repositorios.RepoProductoBase;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -35,6 +39,7 @@ public class ProductoBaseController{
             return false;
         }
     }
+
     @GetMapping("/productos/{productoBaseId}/posiblesPersonalizaciones")
     public List<PosiblePersonalizacion> traerTodas(@PathVariable("productoBaseId") Integer productoBaseId){
         return repoProducto.findById(productoBaseId).get().getPersonalizacionesPermitidas();

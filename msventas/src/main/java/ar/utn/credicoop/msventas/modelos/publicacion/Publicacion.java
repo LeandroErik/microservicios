@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 public class Publicacion extends Persistente {
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
 
@@ -26,7 +26,7 @@ public class Publicacion extends Persistente {
     @Column(name = "fechaDePublicacion", columnDefinition = "DATE")
     private LocalDate fechaDePublicacion;
 
-    @OneToMany(mappedBy = "publicacion")
+    @OneToMany(mappedBy = "publicacion",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<EstadoPublicacion> estados;
 
     public Publicacion() {

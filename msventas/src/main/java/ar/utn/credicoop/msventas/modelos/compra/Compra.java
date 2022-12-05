@@ -1,5 +1,6 @@
 package ar.utn.credicoop.msventas.modelos.compra;
 
+import ar.utn.credicoop.msventas.modelos.MediosDePago;
 import ar.utn.credicoop.msventas.modelos.Persistente;
 import ar.utn.credicoop.msventas.modelos.carrito.CarritoDeCompra;
 import lombok.Getter;
@@ -30,6 +31,13 @@ public class Compra extends Persistente {
     @OneToMany(mappedBy = "compra",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<EstadoCompra> estados;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private DatosPago datosPago;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MediosDePago medioDePago;
+
     public Compra() {
         this.estados = new ArrayList<>();
     }
@@ -39,9 +47,4 @@ public class Compra extends Persistente {
         estados.add(estado);
     }
 
-
 }
-
-// TODO agregar precio total en la compra
-// TODO agregar datos para el pago
-// que podriamos en los datos para el pago que tiene la compra,ya que depende de el medio de pago,estaria bien que solo guarde un string.

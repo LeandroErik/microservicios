@@ -88,7 +88,7 @@ public class VentasController {
 
     @PostMapping("/carritoDeCompra/")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<Object>  crearCarritoDeCompra(@RequestBody CarritoDeCompra carritoDeCompra){
+    public @ResponseBody ResponseEntity<Object> crearCarritoDeCompra(@RequestBody CarritoDeCompra carritoDeCompra){
 
         carritoDeCompra.agregarEstado(new EstadoCarrito(PosibleEstadoCarrito.PENDIENTE, LocalDate.now(), LocalTime.now()));
 
@@ -100,8 +100,17 @@ public class VentasController {
     @PostMapping("/carritoDeCompra/{carritoDeCompraId}/items")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<Object> agregarCarritoDeCompra(@PathVariable("carritoDeCompraId") Integer carritoDeCompraId,@RequestBody ItemDTO itemDTO){
+        Optional<CarritoDeCompra> carritoDeCompraOptional = repoCarrito.findById(carritoDeCompraId);
+        if(!carritoDeCompraOptional.isPresent()){
+            return new ResponseEntity<Object>("No se pudo crear carrito", null, HttpStatus.NOT_FOUND);
+        }
         Item itemPub = new Item();
-        itemPub.setPublicacion(itemDTO.getPublicacion());
+        Publicacion publicacion = new Publicacion();
+        publicacion.setFechaDePublicacion(LocalDate.now());
+        publicacion.setVendedor(itemDTO.getPublicacion().getVendedor());
+        publicacion.setProductoPersonalizadoId(itemDTO.getPublicacion().getProductoPersonalizadoId());
+        publicacion.agregarEstados(new EstadoPublicacion(PosibleEstadoPublicacion.ACTIVA,LocalDate.now(),LocalTime.now()));
+        itemPub.setPublicacion(publicacion);
         itemPub.setCantidad(itemDTO.getCantidad());
 
         Optional<CarritoDeCompra> carritoOp = repoCarrito.findById(carritoDeCompraId);
@@ -145,6 +154,8 @@ public class VentasController {
         compra.setHora(LocalTime.now());
         compra.setFecha(LocalDate.now());
         compra.agregarEstado(new EstadoCompra(PosibleEstadoCompra.PENDIENTE,LocalDate.now(),LocalTime.now()));
+        compra.setMedioDePago(compraDTO.getMedioDePago());
+        compra.setDatosPago(compraDTO.getDatosPago());
 
         repoCompra.save(compra);
         return ResponseEntity.ok("OrdenDeCompraId: "+compra.getId());
