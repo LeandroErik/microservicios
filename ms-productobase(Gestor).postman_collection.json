@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "5ef1fac7-04cf-4be3-af36-54c63df5f1e3",
+		"name": "ms-productobase(Gestor)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18957986"
+	},
+	"item": [
+		{
+			"name": "guardar producto GORRA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\" : \"Gorra\",\r\n    \"descripcion\":\"Una gorra.\",\r\n    \"personalizacionesPermitidas\":[{\r\n    \"area\":{\"nombreArea\":\"Frente\"},\r\n    \"tipo\":{\"nombreTipo\":\"Bordado\"}\r\n}\r\n],\r\n    \"tiempoFabricacion\" : 4,\r\n    \"precioBase\": 10.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/productos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY crear producto base GORRA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\" : \"Gorra\",\r\n    \"descripcion\":\"Una gorra.\",\r\n    \"personalizacionesPermitidas\":[{\r\n    \"area\":{\"nombreArea\":\"Frente\"},\r\n    \"tipo\":{\"nombreTipo\":\"Bordado\"}\r\n}\r\n],\r\n    \"tiempoFabricacion\" : 4,\r\n    \"precioBase\": 10.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9001/productobase/productos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"productobase",
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "guardar producto REMERA",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\" : \"Remera\",\r\n    \"descripcion\":\"Una remera bonita estampa.\",\r\n    \"personalizacionesPermitidas\":[\r\n        {\r\n            \"area\":{\"nombreArea\":\"Espalda\"},\r\n            \"tipo\":{\"nombreTipo\":\"Estampa\"}\r\n        }],\r\n    \"tiempoFabricacion\" : 4,\r\n    \"precioBase\": 11.8\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/productos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregar posible personalizacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":{\"nombreArea\":\"Espalda\"},\r\n    \"tipo\":{\"nombreTipo\":\"Estampa\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/productos/1/posiblepersonalizacion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"1",
+						"posiblepersonalizacion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crear posible personalizacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":{\"nombreArea\":\"Frente\"},\r\n    \"tipo\":{\"nombreTipo\":\"Bordado\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/posiblepersonalizacion/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"posiblepersonalizacion",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admite personalizacion GORRA",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":{\"nombreArea\":\"Frente\"},\r\n    \"tipo\":{\"nombreTipo\":\"Bordado\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/productos/1/admitePersonalizacion/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"1",
+						"admitePersonalizacion",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admite personalizacion REMERA",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":{\"nombreArea\":\"Espalda\"},\r\n    \"tipo\":{\"nombreTipo\":\"Estampa\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/productos/1/admitePersonalizacion/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"1",
+						"admitePersonalizacion",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar Un producto base",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/productos/1/datos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"productos",
+						"1",
+						"datos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "09dd1abe-417e-44de-abed-aad61b06d87b",
+		"name": "ms-ventas (Comprador)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18957986"
+	},
+	"item": [
+		{
+			"name": "Crear carrito de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comprador\":{\r\n    \"nombre\":\"Erik\",\r\n    \"apellido\":\"Quispe\",\r\n    \"tipoDocumento\": \"DNI\",\r\n    \"nroDocumento\":\"222222\",\r\n    \"telefonos\": [1111],\r\n    \"email\":\"erik@gmail.com\",\r\n    \"carritoDeCompra\":null\r\n    },\r\n    \"items\":[],\r\n    \"estados\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/carritoDeCompra/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"carritoDeCompra",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar Item a carrito de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"publicacion\":{\r\n            \"vendedor\":{\r\n                        \"nombre\":\"Erik\",\r\n                        \"apellido\":\"Quispe\",\r\n                        \"cuitCuil\": \"2222222\",\r\n                        \"publicaciones\":[],\r\n                        \"mediosDePago\": \"DEBITO\"\r\n                        },\r\n    \"productoPersonalizadoId\":1\r\n    },\r\n    \"cantidad\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/carritoDeCompra/1/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"carritoDeCompra",
+						"1",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar precio total de carrito de compras",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8003/carritoDeCompra/1/itemsPrecioTotal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"carritoDeCompra",
+						"1",
+						"itemsPrecioTotal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generar orden de compra",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"carritoDeCompraId\":1,\r\n    \"datosPago\":\r\n    {\r\n        \"tipoDocumento\":\"DNI\",\r\n        \"documento\":2222,\r\n        \"nombre\":\"Erik\"\r\n    },\r\n    \"medioDePago\":\"EFECTIVO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/ordenDeCompra/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"ordenDeCompra",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar publicacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vendedor\":null,\r\n    \"productoPersonalizadoId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/publicaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"publicaciones",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar Vendedor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"Erik\",\r\n    \"apellido\":\"Quispe\",\r\n    \"cuitCuil\": \"2222222\",\r\n    \"publicaciones\":[],\r\n    \"mediosDePago\": \"DEBITO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/vendedores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"vendedores",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar Comprador",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"Erik\",\r\n    \"apellido\":\"Quispe\",\r\n    \"tipoDocumento\": \"DNI\",\r\n    \"nroDocumento\":\"222222\",\r\n    \"telefonos\": [1111],\r\n    \"email\":\"erik@gmail.com\",\r\n    \"carritoDeCompra\":null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8003/compradores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"compradores",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

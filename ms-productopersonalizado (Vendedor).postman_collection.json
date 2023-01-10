@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "f91dc152-34a4-4e70-896b-bcf30d3fd64d",
+		"name": "ms-productopersonalizado (Vendedor)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18957986"
+	},
+	"item": [
+		{
+			"name": "Crear producto personalizado",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productoId\" : 1,\r\n    \"personalizacion\":\r\n    {\r\n        \"nombre\": \"algo bonito\",\r\n        \"precioPersonalizacion\" :10.0,\r\n        \"contenido\" : \"una frase\",\r\n        \"posiblePersonalizacion\":\r\n        {\r\n            \"area\":{\"nombreArea\":\"Frente\"},\r\n            \"tipo\":{\"nombreTipo\":\"Bordado\"}\r\n        }\r\n    },\r\n    \"precioFinal\":null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/productosPersonalizados/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"productosPersonalizados",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consultar precio de producto personalizado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/productosPersonalizados/1/datos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"productosPersonalizados",
+						"1",
+						"datos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
